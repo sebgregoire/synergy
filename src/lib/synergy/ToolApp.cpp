@@ -29,7 +29,7 @@
 #include "platform/MSWindowsSession.h"
 #endif
 
-#define JSON_URL "https://synergy-project.org/premium/json/"
+#define JSON_URL "http://test.synergy-project.org/account/json/auth"
 
 enum {
 	kErrorOk,
