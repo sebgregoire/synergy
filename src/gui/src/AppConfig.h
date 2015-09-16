@@ -78,6 +78,7 @@ class AppConfig
 		QString activateEmail() { return m_ActivateEmail; }
 		void setUserToken(QString t) { m_UserToken = t; }
 		QString userToken() { return m_UserToken; }
+		const QString& dropTarget() const { return m_DropTarget; }
 
 		QString synergysName() const { return m_SynergysName; }
 		QString synergycName() const { return m_SynergycName; }
@@ -105,6 +106,7 @@ class AppConfig
 		void setLanguage(const QString language) { m_Language = language; }
 		void setStartedBefore(bool b) { m_StartedBefore = b; }
 		void setElevateMode(bool b) { m_ElevateMode = b; }
+		void setDropTarget(const QString& s) { m_DropTarget = s; }
 
 		void loadSettings();
 		void saveSettings();
@@ -129,6 +131,7 @@ class AppConfig
 		QString m_UserToken;
 		bool m_CryptoEnabled;
 		bool m_AutoHide;
+		QString m_DropTarget;
 
 		static const char m_SynergysName[];
 		static const char m_SynergycName[];

@@ -58,6 +58,8 @@ SettingsDialog::SettingsDialog(QWidget* parent, AppConfig& config) :
 	m_SuppressElevateWarning = false;
 
 	m_pCheckBoxAutoHide->hide();
+
+	m_pLineEditDropTarget->setText(appConfig().dropTarget());
 #else
 	// elevate checkbox is only useful on ms windows.
 	m_pCheckBoxElevateMode->hide();
@@ -83,6 +85,7 @@ void SettingsDialog::accept()
 	appConfig().setLanguage(m_pComboLanguage->itemData(m_pComboLanguage->currentIndex()).toString());
 	appConfig().setElevateMode(m_pCheckBoxElevateMode->isChecked());
 	appConfig().setAutoHide(m_pCheckBoxAutoHide->isChecked());
+	appConfig().setDropTarget(m_pLineEditDropTarget->text());
 	appConfig().saveSettings();
 	QDialog::accept();
 }
