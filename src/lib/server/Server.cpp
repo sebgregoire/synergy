@@ -59,7 +59,7 @@ Server::Server(
 		PrimaryClient* primaryClient,
 		synergy::Screen* screen,
 		IEventQueue* events,
-		bool enableDragDrop) :
+		ServerArgs& args) :
 	m_mock(false),
 	m_primaryClient(primaryClient),
 	m_active(primaryClient),
@@ -90,10 +90,10 @@ Server::Server(
 	m_sendFileThread(NULL),
 	m_writeToDropDirThread(NULL),
 	m_ignoreFileTransfer(false),
-	m_enableDragDrop(enableDragDrop),
 	m_sendDragInfoThread(NULL),
 	m_waitDragInfoThread(true),
-	m_sendClipboardThread(NULL)
+	m_sendClipboardThread(NULL),
+	m_args(args)
 {
 	// must have a primary client and it must have a canonical name
 	assert(m_primaryClient != NULL);
@@ -183,7 +183,7 @@ Server::Server(
 							new TMethodEventJob<Server>(this,
 								&Server::handleFakeInputEndEvent));
 
-	if (m_enableDragDrop) {
+	if (m_args.m_enableDragDrop) {
 		m_events->adoptHandler(m_events->forFile().fileChunkSending(),
 								this,
 								new TMethodEventJob<Server>(this,
@@ -1701,7 +1701,7 @@ Server::onMouseUp(ButtonID id)
 		return;
 	}
 	
-	if (m_enableDragDrop) {
+	if (m_args.m_enableDragDrop) {
 		if (!m_screen->isOnScreen()) {
 			String& file = m_screen->getDraggingFilename();
 			if (!file.empty()) {
@@ -1786,7 +1786,7 @@ Server::onMouseMovePrimary(SInt32 x, SInt32 y)
 
 	// should we switch or not?
 	if (isSwitchOkay(newScreen, dir, x, y, xc, yc)) {
-		if (m_enableDragDrop
+		if (m_args.m_enableDragDrop
 			&& m_screen->isDraggingStarted()
 			&& m_active != newScreen
 			&& m_waitDragInfoThread) {
@@ -2073,7 +2073,15 @@ Server::writeToDropDirThread(void*)
 		ARCH->sleep(.1f);
 	}
 
-	DropHelper::writeToDir(m_screen->getDropTarget(), m_fakeDragFileList,
+	String dropTarget;
+	if (m_args.m_dropDirectory.empty()) {
+		dropTarget = m_screen->getDropTarget();
+	}
+	else {
+		dropTarget = m_args.m_dropDirectory;
+	}
+
+	DropHelper::writeToDir(dropTarget, m_fakeDragFileList,
 					m_receivedFileData);
 }
 
@@ -2385,7 +2393,7 @@ Server::sendFileThread(void* data)
 void
 Server::dragInfoReceived(UInt32 fileNum, String content)
 {
-	if (!m_enableDragDrop) {
+	if (!m_args.m_enableDragDrop) {
 		LOG((CLOG_DEBUG "drag drop not enabled, ignoring drag info."));
 		return;
 	}

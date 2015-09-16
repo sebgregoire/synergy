@@ -25,6 +25,7 @@
 #include "synergy/mouse_types.h"
 #include "synergy/INode.h"
 #include "synergy/DragInformation.h"
+#include "synergy/ServerArgs.h"
 #include "base/Event.h"
 #include "base/Stopwatch.h"
 #include "base/EventTypes.h"
@@ -106,12 +107,12 @@ public:
 	ownership of \p primaryClient.
 	*/
 	Server(Config& config, PrimaryClient* primaryClient,
-		synergy::Screen* screen, IEventQueue* events, bool enableDragDrop);
+		synergy::Screen* screen, IEventQueue* events, ServerArgs& args);
 	~Server();
 
 #ifdef TEST_ENV
-	Server() : m_mock(true), m_config(NULL) { }
-	void setActive(BaseClientProxy* active) {	m_active = active; }
+	Server() : m_mock(true), m_config(NULL), m_args(ServerArgs()) { }
+	void setActive(BaseClientProxy* active) { m_active = active; }
 #endif
 
 	//! @name manipulators
@@ -475,7 +476,6 @@ private:
 	Thread*				m_writeToDropDirThread;
 	String				m_dragFileExt;
 	bool				m_ignoreFileTransfer;
-	bool				m_enableDragDrop;
 
 	Thread*				m_sendDragInfoThread;
 	bool				m_waitDragInfoThread;
@@ -483,4 +483,5 @@ private:
 	ClientListener*		m_clientListener;
 
 	Thread*				m_sendClipboardThread;
+	ServerArgs			m_args;
 };

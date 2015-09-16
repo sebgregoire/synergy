@@ -788,8 +788,15 @@ Client::writeToDropDirThread(void*)
 	while (m_screen->isFakeDraggingStarted()) {
 		ARCH->sleep(.1f);
 	}
-	
-	DropHelper::writeToDir(m_screen->getDropTarget(), m_dragFileList,
+
+	String dropTarget;
+	if (m_args.m_dropDirectory.empty()) {
+		dropTarget = m_screen->getDropTarget();
+	}
+	else {
+		dropTarget = m_args.m_dropDirectory;
+	}
+	DropHelper::writeToDir(dropTarget, m_dragFileList,
 					m_receivedFileData);
 }
 
