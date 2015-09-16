@@ -550,6 +550,10 @@ void MainWindow::startSynergy()
 	args << "--profile-dir" << getProfileRootForArg();
 #endif
 
+	if (!m_AppConfig.dropDirectory().isEmpty()) {
+		args << "--drop-dir" << m_AppConfig.dropDirectory();
+	}
+
 	if ((synergyType() == synergyClient && !clientArgs(args, app))
 		|| (synergyType() == synergyServer && !serverArgs(args, app)))
 	{
