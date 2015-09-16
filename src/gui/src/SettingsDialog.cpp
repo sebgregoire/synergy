@@ -166,3 +166,16 @@ void SettingsDialog::on_m_pCheckBoxEnableCrypto_toggled(bool checked)
 {
 	m_AppConfig.setCryptoEnabled(checked);
 }
+
+void SettingsDialog::on_m_pButtonBrowseDropTarget_clicked()
+{
+	QString fileName = QFileDialog::getExistingDirectory(
+		this, tr("Set drop target to..."),
+		QDir::home().absolutePath(),
+		QFileDialog::ShowDirsOnly);
+
+	if (!fileName.isEmpty())
+	{
+		m_pLineEditDropTarget->setText(fileName);
+	}
+}
