@@ -63,6 +63,11 @@ SettingsDialog::SettingsDialog(QWidget* parent, AppConfig& config) :
 #else
 	// elevate checkbox is only useful on ms windows.
 	m_pCheckBoxElevateMode->hide();
+
+	// set drop target is only useful on Windows
+	m_pLabelDropTarget->hide();
+	m_pLineEditDropTarget->hide();
+	m_pButtonBrowseDropTarget->hide();
 #endif
 
 	if (!PluginManager::exist(networkSecurity)) {
