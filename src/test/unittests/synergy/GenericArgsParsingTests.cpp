@@ -313,3 +313,67 @@ TEST(GenericArgsParsingTests, parseGenericArgs_dragDropCmdOnLinux_enableDragDrop
 	EXPECT_EQ(1, i);
 }
 #endif
+
+TEST(GenericArgsParsingTests, parseGenericArgs_cryptoCmd_enableCryptoTrue)
+{
+	int i = 1;
+	const int argc = 2;
+	const char* kCryptoCmd[argc] = { "stub", "--enable-crypto" };
+
+	ArgParser argParser(NULL);
+	ArgsBase argsBase;
+	argParser.setArgsBase(argsBase);
+	
+	argParser.parseGenericArgs(argc, kCryptoCmd, i);
+
+	EXPECT_EQ(true, argsBase.m_enableCrypto);
+	EXPECT_EQ(1, i);
+}
+
+TEST(GenericArgsParsingTests, parseGenericArgs_profileCmd_saveProfileDirectory)
+{
+	int i = 1;
+	const int argc = 3;
+	const char* kProfileCmd[argc] = { "stub", "--profile-dir", "mock" };
+
+	ArgParser argParser(NULL);
+	ArgsBase argsBase;
+	argParser.setArgsBase(argsBase);
+	
+	argParser.parseGenericArgs(argc, kProfileCmd, i);
+
+	EXPECT_EQ("mock", argsBase.m_profileDirectory);
+	EXPECT_EQ(2, i);
+}
+
+TEST(GenericArgsParsingTests, parseGenericArgs_pluginCmd_savePluginDirectory)
+{
+	int i = 1;
+	const int argc = 3;
+	const char* kPluginCmd[argc] = { "stub", "--plugin-dir", "mock" };
+
+	ArgParser argParser(NULL);
+	ArgsBase argsBase;
+	argParser.setArgsBase(argsBase);
+	
+	argParser.parseGenericArgs(argc, kPluginCmd, i);
+
+	EXPECT_EQ("mock", argsBase.m_pluginDirectory);
+	EXPECT_EQ(2, i);
+}
+
+TEST(GenericArgsParsingTests, parseGenericArgs_dropCmd_saveDropDirectory)
+{
+	int i = 1;
+	const int argc = 3;
+	const char* kDropCmd[argc] = { "stub", "--drop-dir", "mock" };
+
+	ArgParser argParser(NULL);
+	ArgsBase argsBase;
+	argParser.setArgsBase(argsBase);
+	
+	argParser.parseGenericArgs(argc, kDropCmd, i);
+
+	EXPECT_EQ("mock", argsBase.m_dropDirectory);
+	EXPECT_EQ(2, i);
+}
