@@ -301,6 +301,9 @@ ArgParser::parseGenericArgs(int argc, const char* const* argv, int& i)
 	else if (isArg(i, argc, argv, NULL, "--plugin-dir", 1)) {
 		argsBase().m_pluginDirectory = argv[++i];
 	}
+	else if (isArg(i, argc, argv, NULL, "--drop-dir", 1)) {
+		argsBase().m_dropDirectory = argv[++i];
+	}
 	else {
 		// option not supported here
 		return false;

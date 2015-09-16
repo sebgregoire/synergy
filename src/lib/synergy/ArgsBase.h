@@ -51,4 +51,5 @@ public:
 	bool				m_enableCrypto;
 	String				m_profileDirectory;
 	String				m_pluginDirectory;
+	String				m_dropDirectory;
 };
