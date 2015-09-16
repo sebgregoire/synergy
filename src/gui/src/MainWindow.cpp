@@ -551,7 +551,7 @@ void MainWindow::startSynergy()
 #endif
 
 	if (!m_AppConfig.dropDirectory().isEmpty()) {
-		args << "--drop-dir" << m_AppConfig.dropDirectory();
+		args << "--drop-dir" << QString("\"%1\"").arg(m_AppConfig.dropDirectory());
 	}
 
 	if ((synergyType() == synergyClient && !clientArgs(args, app))
