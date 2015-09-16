@@ -59,15 +59,15 @@ SettingsDialog::SettingsDialog(QWidget* parent, AppConfig& config) :
 
 	m_pCheckBoxAutoHide->hide();
 
-	m_pLineEditDropTarget->setText(appConfig().dropTarget());
+	m_pLineEditDropDirectory->setText(appConfig().dropDirectory());
 #else
 	// elevate checkbox is only useful on ms windows.
 	m_pCheckBoxElevateMode->hide();
 
 	// set drop target is only useful on Windows
-	m_pLabelDropTarget->hide();
-	m_pLineEditDropTarget->hide();
-	m_pButtonBrowseDropTarget->hide();
+	m_pLabelDropDirectory->hide();
+	m_pLineEditDropDirectory->hide();
+	m_pButtonBrowseDropDirectory->hide();
 #endif
 
 	if (!PluginManager::exist(networkSecurity)) {
@@ -90,7 +90,7 @@ void SettingsDialog::accept()
 	appConfig().setLanguage(m_pComboLanguage->itemData(m_pComboLanguage->currentIndex()).toString());
 	appConfig().setElevateMode(m_pCheckBoxElevateMode->isChecked());
 	appConfig().setAutoHide(m_pCheckBoxAutoHide->isChecked());
-	appConfig().setDropTarget(m_pLineEditDropTarget->text());
+	appConfig().setDropDirectory(m_pLineEditDropDirectory->text());
 	appConfig().saveSettings();
 	QDialog::accept();
 }
@@ -175,7 +175,7 @@ void SettingsDialog::on_m_pCheckBoxEnableCrypto_toggled(bool checked)
 	m_AppConfig.setCryptoEnabled(checked);
 }
 
-void SettingsDialog::on_m_pButtonBrowseDropTarget_clicked()
+void SettingsDialog::on_m_pButtonBrowseDropDirectory_clicked()
 {
 	QString fileName = QFileDialog::getExistingDirectory(
 		this, tr("Set drop target to..."),
@@ -184,6 +184,6 @@ void SettingsDialog::on_m_pButtonBrowseDropTarget_clicked()
 
 	if (!fileName.isEmpty())
 	{
-		m_pLineEditDropTarget->setText(fileName);
+		m_pLineEditDropDirectory->setText(fileName);
 	}
 }

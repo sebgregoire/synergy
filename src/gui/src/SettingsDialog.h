@@ -49,7 +49,7 @@ class SettingsDialog : public QDialog, public Ui::SettingsDialogBase
 		bool m_SuppressElevateWarning;
 
 	private slots:
-		void on_m_pButtonBrowseDropTarget_clicked();
+		void on_m_pButtonBrowseDropDirectory_clicked();
 		void on_m_pCheckBoxEnableCrypto_toggled(bool checked);
 		void on_m_pCheckBoxElevateMode_toggled(bool checked);
 		void on_m_pComboLanguage_currentIndexChanged(int index);
